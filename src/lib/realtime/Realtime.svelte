@@ -121,7 +121,11 @@
 		items = [];
 
 		// Connect to microphone
-		await wavRecorder.begin();
+		await wavRecorder.begin().then(() => {
+			console.log('wavRecorder.begin()');
+		}).catch((e) => {
+			console.error('wavRecorder.begin() error', e);
+		});
 
 		// Connect to audio output
 		await wavStreamPlayer.connect();

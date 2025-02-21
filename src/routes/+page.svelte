@@ -272,9 +272,9 @@ The first question asked of you that and that you you should immediately answer 
 
 	async function handleEndConversation() {
 		isConnected = false;
-		realtimeEvents = [];
+		// realtimeEvents = [];
 		items = [];
-		resetFormFields();
+		// resetFormFields();
 		await endConversation();
 	}
 </script>
@@ -567,7 +567,7 @@ The first question asked of you that and that you you should immediately answer 
 
 				<button
 					type="button"
-					on:click={() => handleEndConversation()}
+					on:click={async () => await handleEndConversation()}
 					class="rounded-full px-5 py-3 text-base font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 text-blue-400 bg-blue-500/10 border border-blue-400/20 hover:bg-blue-500/20"
 				>
 					disconnect
