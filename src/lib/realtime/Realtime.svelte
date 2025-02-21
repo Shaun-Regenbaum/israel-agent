@@ -56,8 +56,6 @@
 		client.updateSession({
 			input_audio_transcription: { model: 'whisper-1' }
 		});
-		
-		
 
 		client.on('realtime.event', (realtimeEvent: RealtimeEvent) => {
 			const lastEvent = realtimeEvents[realtimeEvents.length - 1];

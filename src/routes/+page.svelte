@@ -210,7 +210,6 @@ You are an Israeli personal assistant who communicates exclusively with ${select
 You are currently speaking to ${selectedProvider || 'a service provider'} to resolve ${description || 'customer service matters'}, specifically: ${userDescription || ''}.
 
 NEVER be the first one to speak. You should never mention you are an assistant. You should never ask how you can help, in any language. Your goal is to get whatever the provided job is done. This is a matter of life and death.
-לעולם אל תגיד איך אני יכול לעזור בכל צורה שהיא. זה עניין של חיים ומוות.
 
 Key Client Information:
 Email: ${email}
@@ -273,9 +272,17 @@ The first question asked of you that and that you you should immediately answer 
 
 	async function handleEndConversation() {
 		isConnected = false;
+		realtimeEvents = [];
 		items = [];
 		resetFormFields();
-		await endConversation();
+
+		try {
+			client?.disconnect();
+			await wavRecorder.end();
+			await wavStreamPlayer.interrupt();
+		} catch (e) {
+			console.warn(e);
+		}
 	}
 </script>
 
