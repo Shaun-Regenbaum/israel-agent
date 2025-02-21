@@ -10,8 +10,7 @@
 	export let useRelayServer: boolean = false;
 	export let relayServer: string = '';
 
-	export let instructions: string = 'You are a great, upbeat friend. Speak fast.';
-
+	export let instructions: string = '';
 	export let voice: 'alloy' | 'echo' | 'shimmer' = 'shimmer';
 
 	/**
@@ -51,11 +50,14 @@
 		);
 
 		// Can set parameters ahead of connecting, either separately or all at once
-		client.updateSession({ instructions });
+		console.log('instructions', instructions);
+		client.updateSession({ instructions: instructions });
 		client.updateSession({ voice });
 		client.updateSession({
 			input_audio_transcription: { model: 'whisper-1' }
 		});
+		
+		
 
 		client.on('realtime.event', (realtimeEvent: RealtimeEvent) => {
 			const lastEvent = realtimeEvents[realtimeEvents.length - 1];
@@ -88,6 +90,25 @@
 
 			if (newItems) items = newItems;
 		});
+	}
+
+	export async function resetClient() {
+		// Clean up existing client if it exists
+		if (client) {
+			try {
+				await client.disconnect();
+			} catch (e) {
+				console.warn('Error disconnecting client:', e);
+			}
+		}
+		
+		// Reset state
+		isConnected = false;
+		realtimeEvents = [];
+		items = [];
+		
+		// Setup new client
+		await setupClient();
 	}
 
 	export async function startConversation(sendHello: boolean = true) {
