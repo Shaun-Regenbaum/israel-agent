@@ -275,14 +275,7 @@ The first question asked of you that and that you you should immediately answer 
 		realtimeEvents = [];
 		items = [];
 		resetFormFields();
-
-		try {
-			client?.disconnect();
-			await wavRecorder.end();
-			await wavStreamPlayer.interrupt();
-		} catch (e) {
-			console.warn(e);
-		}
+		await endConversation();
 	}
 </script>
 
@@ -537,7 +530,7 @@ The first question asked of you that and that you you should immediately answer 
 									? 'text-blue-200'
 									: 'text-white'}"
 							>
-								<span class="font-semibold">{item.role === 'user' ? 'Representative' : 'AI Agent'}:</span>
+								<span class="font-semibold">{item.role}:</span>
 								{item.role === 'user'
 									? item.formatted.transcript || '(empty)'
 									: item.formatted.transcript || '(truncated)'}
